@@ -112,7 +112,7 @@
 #### **gulp ngConstant**
 
 ##### **参数**
-* <code>--name</code>: 文件名称，如<code>--name=backend</code>。
+* <code>--name</code>: 文件名称，如<code>--name=component</code>。
 * <code>--d</code> 或 <code>--delete</code>: 删除文件。
 
 ##### **描述**
@@ -120,11 +120,6 @@
 * 如果加上<code>--d</code> 或 <code>--delete</code>，将删除相关文件。
 
 ### **环境变量**
-
-#### **environment/backendConstants.js**
-
-##### **描述**
-* 该文件设定在开发程序时，开发模式(dev)和生产模式(prod)的后台服务地址及相关信息。
 
 #### **environment/gulpConstants.js**
 
