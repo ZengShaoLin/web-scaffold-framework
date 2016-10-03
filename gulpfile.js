@@ -4,8 +4,6 @@ var gulpIf = require('gulp-if');
 var watch = require('gulp-watch'); //watch files
 var jsHint = require('gulp-jshint'); //report javascript bugs and warnings
 var esLint = require('gulp-eslint'); //identifying and reporting on patterns found in JavaScript code
-var preProcess = require('gulp-preprocess');
-var rename = require('gulp-rename');
 var uglify = require('gulp-uglify-cli');    //minify js
 var cleanCSS = require('gulp-clean-css');   //minify css
 var htmlmin = require('gulp-htmlmin');  //minify html
@@ -21,7 +19,6 @@ var constants = require('./environment/gulpConstants')(historyApiFallback);
 //argv parameters used by gulp tasks
 //gulp serve: --no-open, --no-notify, --port
 //gulp test: --no-singleRun, --browsers
-//gulp backend: --env
 //gulp ngController: --service, -s
 //gulp ngDirective: --template, --t
 //发布正式版: --release
@@ -33,30 +30,23 @@ var argv = require('yargs').argv;
 //加载生成文件tasks
 require('./generator')(fs, gulp, argv, pathExists, constants);
 
-//js任务callback方法
-var jsCallBack = function() {
-    return gulp.src(constants.js.src)
-        .pipe(gulpIf(argv.release, uglify(constants.minify.js)))
-        .pipe(gulp.dest(constants.basePath + constants.js.dest));
-}
-
 //使用jshint检查js代码
 gulp.task('jsHint', function() {
-    return gulp.src(constants.js.src.concat(constants.backend.src))
+    return gulp.src(constants.js.src)
         .pipe(jsHint())
         .pipe(jsHint.reporter('jshint-stylish'));
 });
 
 //使用eslint检查js代码
 gulp.task('esLint', function() {
-    return gulp.src(constants.js.src.concat(constants.backend.src))
+    return gulp.src(constants.js.src)
         .pipe(esLint())
         .pipe(esLint.format())
         .pipe(esLint.failAfterError());
 });
 
 //生成dist文件夹
-gulp.task('dist', ['style', 'img', 'font', 'html', 'index', 'jsDist', 'json', argv.release ? 'minifyComponents' : 'components']);
+gulp.task('dist', ['style', 'img', 'font', 'html', 'index', 'js', 'json', argv.release ? 'minifyComponents' : 'components']);
 
 gulp.task('style', function() {
     return gulp.src(constants.style.src)
@@ -88,10 +78,11 @@ gulp.task('index', function() {
         .pipe(gulp.dest(constants.basePath));
 });
 
-//watch execute task
-gulp.task('js', jsCallBack);
-//dist execute task
-gulp.task('jsDist', ['backend'], jsCallBack);
+gulp.task('js', function() {
+    return gulp.src(constants.js.src)
+        .pipe(gulpIf(argv.release, uglify(constants.minify.js)))
+        .pipe(gulp.dest(constants.basePath + constants.js.dest));
+});
 
 gulp.task('json', function() {
     return gulp.src(constants.json.src)
@@ -109,13 +100,6 @@ gulp.task('minifyComponents', ['components'], function() {
         .pipe(gulp.dest(function(file) {
             return file.base.replace(__dirname + '\\', '');
         }));
-});
-
-gulp.task('backend', function() {
-    return gulp.src(constants.backend.src)
-        .pipe(preProcess({ context: { ENV: argv.env || (argv.release ? 'prod' : 'dev') } }))
-        .pipe(rename(constants.backend.rename))
-        .pipe(gulp.dest(constants.backend.dest));
 });
 
 //定义监控事件
@@ -143,7 +127,6 @@ gulp.task('jsonWatch', ['json'], function() {
 gulp.task('componentsWatch', ['components'], function() {
     browserSync.reload();
 });
-gulp.task('backendWatch', ['backend']);
 
 //在浏览器上运行
 gulp.task('serve', [argv.release ? 'dist' : 'filesWatch'], function() {
@@ -184,9 +167,6 @@ gulp.task('filesWatch', ['dist'], function() {
     });
     watch(constants.components.src, function() {
         gulp.start('componentsWatch');
-    });
-    watch(constants.backend.src, function() {
-        gulp.start('backendWatch');
     });
 });
 

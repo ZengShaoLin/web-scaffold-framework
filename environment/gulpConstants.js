@@ -13,11 +13,6 @@ module.exports = function(historyApiFallback) {
                 flag: 'wx' 
             }
         },
-        backend: {
-            src: 'environment/backendConstants.js',
-            rename: 'backend.js',
-            dest: 'www/src/constants'
-        },
         style: {
             src: 'www/css/*.css',
             output: 'main.css',
