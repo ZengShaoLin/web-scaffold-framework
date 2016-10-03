@@ -1,7 +1,7 @@
 (function() {
     define(['app'], function(app) {
         //共用组件
-        var commonComponents = ['factorys/service'];
+        var commonComponents = ['factories/service'];
         //controllers
         var components = {
             'login': ['private/login']

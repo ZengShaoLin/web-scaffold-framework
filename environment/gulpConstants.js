@@ -3,7 +3,7 @@ module.exports = function(historyApiFallback) {
         basePath: 'dist/',
         generator: {
             basePath: 'www/src/',
-            factoryPath: 'factorys/',
+            factoryPath: 'factories/',
             constantPath: 'constants/',
             servicePath: 'services/',
             filterPath: 'filters/',
