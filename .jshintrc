@@ -1,0 +1,19 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "esversion": 5,
+    "latedef": "nofunc",
+    "noarg": true,
+    "node": true,
+    "undef": true,
+    "unused": true,
+    "freeze": true,
+    "globals": {
+        "angular": false,
+        "define": false,
+        "requirejs": false,
+        "inject": false
+    },
+    "jasmine": true
+}
