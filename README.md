@@ -18,9 +18,9 @@
 使用
 ------
 
-使用npm全局安装[UglifyJS](https://github.com/mishoo/UglifyJS2)：
+使用npm全局安装[Gulp](https://github.com/gulpjs/gulp)和[UglifyJS](https://github.com/mishoo/UglifyJS2)：
 
-	npm install uglify-js -g
+	npm install gulp uglify-js -g
 
 将项目克隆到本机上：
 
@@ -166,9 +166,17 @@ environment - 环境变量
 -----------------------------
 
 `gulpConstants.js`: 定义gulp任务运行时所需要的参数。
+
 `karmaConstants.js`: 定义karma运行时所需要的参数。
 
 **上述两个文件中的内容可以随意修改，但修改前应先了解参数的作用。**
+
+.gitignore
+------------
+
+`www`内有许多空白文件夹，如`font`、`img`、`json`、`test`、`src/services`等，当你在这些文件夹内添加内容后，请将`.gitignore`文件删除。
+
+**根目录中的`.gitignore`文件请勿删除。**
 
 延迟加载
 ------------
