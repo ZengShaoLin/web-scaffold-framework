@@ -1,5 +1,5 @@
-define(function() {
-    var requirejsConstants = {
+define(() => {
+    const requirejsConstants = {
         paths: {
             'angular': '../lib/angular/angular.min',
             'angular-mocks': '../lib/angular-mocks/angular-mocks',

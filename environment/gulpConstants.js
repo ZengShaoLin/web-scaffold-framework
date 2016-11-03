@@ -9,8 +9,8 @@ module.exports = function(historyApiFallback) {
             filterPath: 'filters/',
             directivePath: 'directives/',
             directiveTemplatePath: 'directiveTemplates/',
-            fileOptions: { 
-                flag: 'wx' 
+            fileOptions: {
+                flag: 'wx'
             }
         },
         style: {
@@ -36,12 +36,14 @@ module.exports = function(historyApiFallback) {
             dest: 'json'
         },
         js: {
-            src: ['www/test/*.js', 'www/src/*.js', 'www/src/**/*.js'],
+            src: ['www/src/{*.js,**/*.js}', '!www/src/{*.spec.js,**/*.spec.js}'],
+            test: 'www/test/*.js',
             dest: 'src'
         },
         components: {
-            src: 'www/lib/**',
-            dest: 'lib',
+            src: ['www/lib/**', 'node_modules/babel-polyfill/**'],
+            dest: 'lib/',
+            babel: 'babel-polyfill',
             minify: ['dist/lib/domReady/domReady.js', 'dist/lib/requirejs/require.js']
         },
         browser: {
@@ -56,11 +58,11 @@ module.exports = function(historyApiFallback) {
         },
         minify: {
             js: '-m toplevel',
-            html: { 
+            html: {
                 collapseBooleanAttributes: true,
                 collapseWhitespace: true
             },
-            css: { 
+            css: {
                 compatibility: 'ie8',
                 keepSpecialComments: 0
             }

@@ -1,16 +1,14 @@
 (function() {
-    define(['app'], function(app) {
+    define(['app'], app => {
         //共用组件
-        var commonComponents = ['factories/service'];
+        const commonComponents = ['factories/service'];
         //controllers
-        var components = {
+        let components = {
             'login': ['private/login']
         };
 
-        angular.forEach(components, function(value, key) {
-           angular.forEach(commonComponents, function(item, i) {
-                value.push(item);
-            });
+        angular.forEach(components, (value, key) => {
+            components[key] = value.concat(commonComponents);
         });
         
         app.constant('components', components);

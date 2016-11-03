@@ -1,0 +1,12 @@
+{
+    "presets": ["es2015"],
+    "ignore": [
+        "node_modules/**",
+        "www/lib/**",
+        "dist/**"
+    ],
+    "comments": true,
+    "plugins": [
+        "transform-remove-strict-mode"
+    ]
+}

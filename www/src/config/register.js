@@ -1,5 +1,5 @@
 (function() {
-    define(['app'], function(app) {
+    define(['app'], app => {
         app.config(config);
 
         config.$inject = ['$filterProvider', '$compileProvider', '$controllerProvider', '$provide'];

@@ -1,10 +1,12 @@
 {
     "root": true,
     "parserOptions": {
-        "ecmaVersion": 5
+        "ecmaVersion": 6,
+        "sourceType": "script"
     },
     "plugins": ["angular", "requirejs", "jasmine"],
     "env": {
+        "es6": true,
         "browser": true,
         "node": true,
         "amd": true,
@@ -82,7 +84,6 @@
         "jasmine/no-suite-dupes": ["warn", "branch"],
         "jasmine/no-spec-dupes": ["warn", "branch"],
         "jasmine/valid-expect": "warn",
-        "requirejs/no-invalid-define": "error",
         "requirejs/no-invalid-require": "error",
         "requirejs/no-multiple-define": "error",
         "requirejs/no-js-extension": "error",

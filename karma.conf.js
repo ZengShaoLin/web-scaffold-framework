@@ -1,5 +1,4 @@
 // Karma configuration
-// Generated on Thu Jun 02 2016 09:40:54 GMT+0800 (中国标准时间)
 var constants = require('./environment/karmaConstants')();
 
 module.exports = function(config) {
@@ -49,6 +48,9 @@ module.exports = function(config) {
             },
             // define the name of angular.module
             moduleName: constants.ngHtml2JsPreprocessor.moduleName
+        },
+        babelPreprocessor: {
+            options: constants.babelPreprocessor.options
         }
     });
 };
