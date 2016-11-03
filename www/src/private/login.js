@@ -1,11 +1,11 @@
 (function() {
-    define(['app'], function(app) {
+    define(['app'], app => {
         app.controller('loginCtrl', loginCtrl);
 
         loginCtrl.$inject = ['$scope'];
 
         function loginCtrl($scope) {
-            var vm = this;
+            let vm = this;
         }
     });
 })();

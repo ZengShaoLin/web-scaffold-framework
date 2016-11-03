@@ -3,8 +3,8 @@
         'ngStorage', 
         'angular-messages', 
         'angular-ui-router'
-    ], function() {
-        var app = angular.module('app', [
+    ], () => {
+        const app = angular.module('app', [
             'ui.router',
             'ngStorage',
             'ngMessages'

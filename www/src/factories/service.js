@@ -1,21 +1,21 @@
 (function() {
-    define(['app'], function(app) {
+    define(['app'], app => {
         app.factory('Service', Service);
 
         Service.$inject = ['$http', '$q'];
 
         function Service($http, $q) {
-            var factory = {
+            const factory = {
                 //获取Json资料
-                getJson: getJson
+                getJson
             };
             return factory;
 
             //获取Json资料
             function getJson(name, folder) {
-                var deferred = $q.defer();
+                let deferred = $q.defer();
 
-                $http.get('./json/' + (folder || '') + name + '.json').then(function(data) {
+                $http.get(`./json/${ folder || '' }${ name }.json`).then((data) => {
                     deferred.resolve(data.data);
                 });
 

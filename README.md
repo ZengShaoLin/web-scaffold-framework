@@ -13,55 +13,53 @@
 * [npm](https://github.com/npm/npm)管理自动化开发组件
 * [bower](https://github.com/bower/bower)管理网页开发组件
 * [karma](https://github.com/karma-runner/karma)搭建单元测试环境
-* [JSHint](https://github.com/jshint/jshint)或[ESLint](https://github.com/eslint/eslint)检查代码规范
+* [ESLint](https://github.com/eslint/eslint)检查代码规范
+* [Babel](https://github.com/babel/babel)将**ES6规范转为ES5**
 
 使用
 ------
 
 使用npm全局安装[Gulp](https://github.com/gulpjs/gulp)和[UglifyJS](https://github.com/mishoo/UglifyJS2)：
 
-	npm install gulp uglify-js -g
+    npm install gulp uglify-js -g
 
 将项目克隆到本机上：
 
-	git clone git@github.com:ZengShaoLin/web-scaffold-framework.git
+    git clone git@github.com:ZengShaoLin/web-scaffold-framework.git
 
 创建新文件夹：
 
-	mkdir my-new-project
+    mkdir my-new-project
 
 进入项目根目录，复制所有文件（**除.git文件夹**）到新文件夹中：
 
-	cd web-scaffold-framework
-	cp -r -f ./* .bowerrc .eslintignore .eslintrc.json .gitignore .jshintrc ../my-new-project
+    cd web-scaffold-framework
+    cp -r -f ./* .babelrc .bowerrc .eslintignore .eslintrc.json .gitignore  ../my-new-project
 
 进入新文件夹，安装组件：
 
-	cd ../my-new-project
-	npm install && bower install
+    cd ../my-new-project
+    npm install && bower install
 
 **建议使用管理员权限的终端执行上述指令。**
 
-安装完成后输入`gulp serve`预览界面。
+安装完成后预览界面：
+        
+    gulp serve
 
 Gulp 指令
 ------------
 
-### JSHint
+### ESLint
 检查所有开发代码是否按照已定义的规则撰写。
 
-	gulp jsHint
-
-### ESLint
-与JSHint类似，**建议使用ESLint**，其提供的代码规范更加全面。
-
-	gulp esLint
+    gulp esLint
 
 ### Browser Serve
 将程序部署到本地指定的端口上，并在默认的浏览器中打开。改动任意的开发文件会自动刷新浏览器。
 
-	gulp serve
-	
+    gulp serve
+    
 可选参数：
 
 * <code>--no-open</code>: 启动时在浏览器中不打开程序。
@@ -72,7 +70,7 @@ Gulp 指令
 ### Unit Test
 执行单元测试。
 
-	gulp test
+    gulp test
 
 可选参数：
 
@@ -82,7 +80,7 @@ Gulp 指令
 ### Angular Controller
 生成angular controller文件，包括.html、.js、.spec.js。生成文件前会检查文件路径，若不存在会自动创建文件夹。
 
-	gulp ngController
+    gulp ngController
 
 必填参数：
 
@@ -99,7 +97,7 @@ Gulp 指令
 ### Angular Directive
 生成angular directive文件，包括.js、.spec.js。
 
-	gulp ngDirective
+    gulp ngDirective
 
 必填参数：
 
@@ -113,7 +111,7 @@ Gulp 指令
 ### Angular Factory
 生成angular factory文件，包括.js、.spec.js。创建时会将factory名称的首字母变为大写，以表示factory为共用库。
 
-	gulp ngFactory
+    gulp ngFactory
 
 必填参数：
 
@@ -126,7 +124,7 @@ Gulp 指令
 ### Angular Service
 生成angular service文件，包括.js、.spec.js。创建时会将service名称的首字母变为大写，以表示service为共用库。
 
-	gulp ngService
+    gulp ngService
 
 必填参数：
 
@@ -139,7 +137,7 @@ Gulp 指令
 ### Angular Filter
 生成angular filter文件，包括.js、.spec.js。
 
-	gulp ngFilter
+    gulp ngFilter
 
 必填参数：
 
@@ -152,7 +150,7 @@ Gulp 指令
 ### Angular Constant
 生成angular constant文件，包括.js。
 
-	gulp ngConstant
+    gulp ngConstant
 
 必填参数：
 
@@ -189,30 +187,22 @@ environment - 环境变量
 
 1. 使用Gulp指令创建文件，如`gulp ngController --path=private --name=home`。
 2. 于`config/route.js`中添加路由配置代码：
-	
-		.state('home', {
-			url: '/home',
-			templateUrl: 'src/private/home.html',
-			controller: 'homeCtrl as home',
-			resolve: {
-				load: ['$q', '$rootScope', function($q, $rootScope) {
-					return loadComponents($q, $rootScope, 'login');
-				}]
-			}
-		});
+    
+        .state('home', {
+            url: '/home',
+            templateUrl: 'src/private/home.html',
+            controller: 'homeCtrl as home',
+            resolve: {
+                load: ['$rootScope', $rootScope => loadComponents($rootScope, 'home')]
+            }
+        });
 
 3. 于`constants/components.js`中添加模块依赖的文件数组：
 
-		//controllers
-        var components = {
+        //controllers
+        let components = {
             'login': ['private/login'],
             'home': ['private/home']
         };
  
 4. 以上三步完成后，当模块切换到home时，系统会先加载`private/home.js`，完成后再进入模块。
-
-下一步
----------
-
-1. 加入gulp-babel，支持使用ES6开发。
-2. 以plugin的方式加入新功能。

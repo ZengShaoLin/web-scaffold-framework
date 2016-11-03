@@ -1,29 +1,28 @@
 (function() {
-    define(['app'], function(app) {
-        describe('loginCtrl', function() {
-            var $controller, $rootScope,
-                controller, $scope;
+    define(['app'], app => {
+        describe('loginCtrl', () => {
+            let $controller, $rootScope, controller, $scope;
 
             module.sharedInjector();
 
             beforeAll(module(app.name));
 
-            beforeAll(inject(function(_$controller_, _$rootScope_) {
+            beforeAll(inject((_$controller_, _$rootScope_) => {
                 $controller = _$controller_;
                 $rootScope = _$rootScope_;
             }));
 
-            beforeEach(function() {
+            beforeEach(() => {
                 $scope = $rootScope.$new();
-                controller = $controller('loginCtrl', { $scope: $scope });
+                controller = $controller('loginCtrl', { $scope });
             });
 
-            afterEach(function() {
+            afterEach(() => {
                 $scope = undefined;
                 controller = undefined;
             });
 
-            it('should be initialized', function() {
+            it('should be initialized', () => {
                 expect(controller).toBeDefined();
             });
         });

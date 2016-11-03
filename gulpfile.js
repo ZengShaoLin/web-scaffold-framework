@@ -1,8 +1,8 @@
 var fs = require('fs');     //file system
 var gulp = require('gulp');
+var babel = require('gulp-babel');
 var gulpIf = require('gulp-if');
 var watch = require('gulp-watch'); //watch files
-var jsHint = require('gulp-jshint'); //report javascript bugs and warnings
 var esLint = require('gulp-eslint'); //identifying and reporting on patterns found in JavaScript code
 var uglify = require('gulp-uglify-cli');    //minify js
 var cleanCSS = require('gulp-clean-css');   //minify css
@@ -30,23 +30,22 @@ var argv = require('yargs').argv;
 //加载生成文件tasks
 require('./generator')(fs, gulp, argv, pathExists, constants);
 
-//使用jshint检查js代码
-gulp.task('jsHint', function() {
-    return gulp.src(constants.js.src)
-        .pipe(jsHint())
-        .pipe(jsHint.reporter('jshint-stylish'));
-});
-
 //使用eslint检查js代码
 gulp.task('esLint', function() {
-    return gulp.src(constants.js.src)
+    var lintFiles = constants.js.src.concat(constants.js.test);
+
+    lintFiles.map(function(value, index) {
+        lintFiles[index] = value.replace('!', '');
+    });
+
+    return gulp.src(lintFiles)
         .pipe(esLint())
         .pipe(esLint.format())
         .pipe(esLint.failAfterError());
 });
 
 //生成dist文件夹
-gulp.task('dist', ['style', 'img', 'font', 'html', 'index', 'js', 'json', argv.release ? 'minifyComponents' : 'components']);
+gulp.task('dist', ['style', 'font', 'img', 'html', 'index', 'js', 'json', argv.release ? 'minifyComponents' : 'components']);
 
 gulp.task('style', function() {
     return gulp.src(constants.style.src)
@@ -80,6 +79,7 @@ gulp.task('index', function() {
 
 gulp.task('js', function() {
     return gulp.src(constants.js.src)
+        .pipe(babel({ babelrc: true }))
         .pipe(gulpIf(argv.release, uglify(constants.minify.js)))
         .pipe(gulp.dest(constants.basePath + constants.js.dest));
 });
@@ -91,7 +91,10 @@ gulp.task('json', function() {
 
 gulp.task('components', function() {
     return gulp.src(constants.components.src)
-        .pipe(gulp.dest(constants.basePath + constants.components.dest));
+        .pipe(gulp.dest(function(file) {
+            var isBabel = file.base.indexOf(constants.components.babel) >= 0;
+            return constants.basePath + constants.components.dest + (isBabel ? constants.components.babel : '');
+        }));
 });
 
 gulp.task('minifyComponents', ['components'], function() {
@@ -170,7 +173,7 @@ gulp.task('filesWatch', ['dist'], function() {
     });
 });
 
-//测试部分使用Karma和Jasmine
+//执行单元测试
 gulp.task('test', function() {
     var karmaOptions = {
         configFile: __dirname + '/' + constants.test.configFile,

@@ -1,17 +1,17 @@
 (function() {
-    define(['app'], function(app) {
-        describe('Service', function() {
-            var Service;
+    define(['app'], app => {
+        describe('Service', () => {
+            let Service;
 
             module.sharedInjector();
 
             beforeAll(module(app.name));
 
-            beforeAll(inject(function(_Service_) {
+            beforeAll(inject((_Service_) => {
                 Service = _Service_;
             }));
 
-            it('should be an Object', function() {
+            it('should be an Object', () => {
                 expect(Service).toEqual(jasmine.any(Object));
             });
         });
