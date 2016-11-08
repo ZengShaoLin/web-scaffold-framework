@@ -9,13 +9,14 @@ var cleanCSS = require('gulp-clean-css');   //minify css
 var htmlmin = require('gulp-htmlmin');  //minify html
 var concat = require('gulp-concat'); //combine files
 var imagemin = require('gulp-imagemin'); //minify images
+var compression = require('compression'); //gzip files
 var historyApiFallback = require('connect-history-api-fallback'); //resolve html5Mode problem: refresh page will receive 404
 var browserSync = require('browser-sync').create();
 var _ = require('lodash');
 var pathExists = require('path-exists');    //check file exist or not
 // var lazypipe = require('lazypipe'); //create reusable pipelines
 var karmaServer = require('karma').Server; //test tool
-var constants = require('./environment/gulpConstants')(historyApiFallback);
+var constants = require('./environment/gulpConstants')(historyApiFallback, compression);
 //argv parameters used by gulp tasks
 //gulp serve: --no-open, --no-notify, --port
 //gulp test: --no-singleRun, --browsers

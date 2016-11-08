@@ -1,4 +1,4 @@
-module.exports = function(historyApiFallback) {
+module.exports = function(historyApiFallback, compression) {
     var gulpConstants = {
         basePath: 'dist/',
         generator: {
@@ -49,7 +49,7 @@ module.exports = function(historyApiFallback) {
         browser: {
             server: {
                 baseDir: 'dist',
-                middleware: [historyApiFallback()]
+                middleware: [historyApiFallback(), compression()]
             },
             host: 'localhost',
             port: 3000,
