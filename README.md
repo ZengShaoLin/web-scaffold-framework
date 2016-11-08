@@ -44,7 +44,7 @@
 **建议使用管理员权限的终端执行上述指令。**
 
 安装完成后预览界面：
-        
+
     gulp serve
 
 Gulp 指令
@@ -59,7 +59,7 @@ Gulp 指令
 将程序部署到本地指定的端口上，并在默认的浏览器中打开。改动任意的开发文件会自动刷新浏览器。
 
     gulp serve
-    
+
 可选参数：
 
 * <code>--no-open</code>: 启动时在浏览器中不打开程序。
@@ -187,7 +187,7 @@ environment - 环境变量
 
 1. 使用Gulp指令创建文件，如`gulp ngController --path=private --name=home`。
 2. 于`config/route.js`中添加路由配置代码：
-    
+
         .state('home', {
             url: '/home',
             templateUrl: 'src/private/home.html',
@@ -204,5 +204,10 @@ environment - 环境变量
             'login': ['private/login'],
             'home': ['private/home']
         };
- 
+
 4. 以上三步完成后，当模块切换到home时，系统会先加载`private/home.js`，完成后再进入模块。
+
+下一步
+---------
+
+1. 加入文件合并功能。
