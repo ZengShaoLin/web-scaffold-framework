@@ -60,7 +60,16 @@ module.exports = function(historyApiFallback, compression) {
             js: '-m toplevel',
             html: {
                 collapseBooleanAttributes: true,
-                collapseWhitespace: true
+                collapseWhitespace: true,
+                removeScriptTypeAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                removeComments: true,
+                minifyJS: {
+                    mangle: {
+                        toplevel: true
+                    }
+                },
+                minifyCSS: true
             },
             css: {
                 compatibility: 'ie8',
